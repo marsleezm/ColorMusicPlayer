@@ -55,11 +55,14 @@ function writeData(user, song, h0, h1, h2)
       if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
           $xml = xmlhttp.responseXML;
-          if($xml.getElementsByTagName("H0").length !== 0 ){
+          if($xml.getElementsByTagName("Score").length !== 0 ){
+              score = $xml.getElementsByTagName("Score")[0].textContent;
+	      hueType = $xml.getElementsByTagName("Hue")[0].textContent;
              // hue0 = $xml.getElementsByTagName( "H0" )[0].textContent;
         //    hue1 = $xml.getElementsByTagName( "H1" )[0].textContent;
         //    hue2 = $xml.getElementsByTagName( "H2" )[0].textContent;
         //    alert("<p>Server color:"+hue0+" "+hue1+" "+hue2+"</p>"+"<p>local color:"+r+" "+g+" "+b+"</p>");
+	     alert(score.toString()+" "+hueType);
           }
         }
       }

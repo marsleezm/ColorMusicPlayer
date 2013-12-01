@@ -1,4 +1,19 @@
 <?php
+function getHueScore($Song, $MyHue)
+{
+$SQL = "
+ Select Color, Count from songavgscore 
+  Where Song = '$Song' ";
+ $arr = array(0,0,0,0,0,0,0,0,0,0,0,0);
+ $result = mysql_query($SQL);
+ while ( $db_field = mysql_fetch_assoc($result) ) {
+   $arr[$db_field['Color']] = $db_field['Count'];
+ }
+ $MyHueCount = $arr[$MyHue];
+ $Max = max($arr);
+ return  number_format($MyHueCount * 100/ $Max);
+}
+
 header('Content-type: text/xml');
 $user_name = "colormusicplayer";
 $password = "Go!0767162024";
@@ -16,7 +31,7 @@ $S = $_POST['Song'];
 $H0 = $_POST['H0'];
 $H1 = $_POST['H1'];
 $H2 = $_POST['H2'];
-$HueType = (($H0+15)%360)/30;
+$HueType = floor((($H0+15)%360)/30);
 
 $SQL = "SELECT HueType FROM songscore WHERE User = '$U' AND Song = '$S' ";
 $result = mysql_query($SQL);
@@ -25,39 +40,42 @@ $oldHue = $db_field['HueType'];
 }
 
     
-$SQL = "
-REPLACE INTO songscore  (User, Song, H0, H1, H2, HueType)
-  VALUES ('$U', '$S', '$H0', '$H1', '$H2', '$HueType')";
+if($oldHue != $HueType){
+	$SQL = "
+	REPLACE INTO songscore  (User, Song, H0, H1, H2, HueType)
+  	VALUES ('$U', '$S', '$H0', '$H1', '$H2', '$HueType')";
 
-if (!mysql_query($SQL))
-{
-  die('Error: ' . mysql_error($db_handle));
-}
+	if (!mysql_query($SQL))
+	{
+  	die('Error: ' . mysql_error($db_handle));
+	}
 
-$SQL = "
-INSERT INTO songavgscore (Song, Color, Count) VALUES ('$S', '$HueType','1')
-  ON DUPLICATE KEY UPDATE Count=Count+1";
+	$SQL = "
+	INSERT INTO songavgscore (Song, Color, Count) VALUES ('$S', '$HueType','1') ON DUPLICATE KEY UPDATE Count=Count+1";
 
-if (!mysql_query($SQL))
-{
-  die('Error: ' . mysql_error($db_handle));
+	if (!mysql_query($SQL))
+	{
+  	die('Error: ' . mysql_error($db_handle));
+	}
+  
+	$SQL = "
+	UPDATE songavgscore 
+  	SET Count = Count -1
+  	WHERE Song= '$S' AND Color= '$oldHue'";
+
+	if (!mysql_query($SQL))
+	{
+  	die('Error: ' . mysql_error($db_handle));
+	}
 }
   
-$SQL = "
-UPDATE songavgscore 
-  SET Count = Count -1
-  WHERE Song= '$S' AND Color= '$oldHue'";
-
-if (!mysql_query($SQL))
-{
-  die('Error: ' . mysql_error($db_handle));
-}
-  
+ $Score = getHueScore($S, $HueType);
 //$SQL = "SELECT * FROM songglobscore WHERE Song='$S'";
 //result = mysql_query($SQL);
-$xml_output .= "<root>\n"; 
+$xml_output .= "<root>\n";
 //while ( $db_field = mysql_fetch_assoc($result) ) {
-//$xml_output .= "<H0>" . $db_field['H0'] . "</H0>";
+$xml_output .= "<Score>" . $Score . "</Score>";
+$xml_output .= "<Hue>" . $HueType . "</Hue>";
 //$xml_output .= "<H1>" . $db_field['H1'] . "</H1>";
 //$xml_output .= "<H2>" . $db_field['H2'] . "</H2>";
 //$xml_output .= 
