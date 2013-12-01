@@ -3,7 +3,8 @@ header('Content-type: text/xml');
 $user_name = "colormusicplayer";
 $password = "Go!0767162024";
 $database = "colormusicplayer";
-$server = "colormusicplayer.db.11081827.hostedresource.com";
+//$server = "colormusicplayer.db.11081827.hostedresource.com";
+$server = "localhost";
 
 $db_handle = mysql_connect($server, $user_name, $password);
 $db_found = mysql_select_db($database, $db_handle);

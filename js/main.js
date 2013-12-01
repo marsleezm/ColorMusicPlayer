@@ -75,8 +75,11 @@ jQuery(document).ready(function () {
             
             var color = getColor();
  
-            writeData(uid,currentIndex,color.h0, color.h1, color.h2);
-            
+           // writeData(uid,currentIndex,color.h0, color.h1, color.h2);
+	            
+            writeData(100,currentIndex,color.h0, color.h1, color.h2);
+	            
+
             finalize();
             $("#cover").css({
                 'width': '398px',
@@ -99,7 +102,8 @@ jQuery(document).ready(function () {
 
             
             WheelController();
-            readData(uid,currentIndex);
+            //readData(uid,currentIndex);
+	    readData(100, currentIndex);
         }
         return false;
     });

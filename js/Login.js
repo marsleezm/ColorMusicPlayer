@@ -5,7 +5,7 @@
 	  //FB.Event.subscribe("auth.logout", function() {window.location.reload()});
 	  FB.init({
 	    appId      : '508842499210412', // App ID
-	    channelUrl : 'zhenyul.in/musicplayer/channel.html', // Channel File
+	    channelUrl : 'http://127.0.0.1:8888/channel.html', //'zhenyul.in/musicplayer/channel.html', // Channel File
 	    status     : true, // check login status
 	    cookie     : true, // enable cookies to allow the server to access the session
 	    xfbml      : true  // parse XFBML
@@ -67,10 +67,11 @@
   
 
 	function fbLogout() {
-	    $.ajax({
+         $.ajax({
 	         url: 'https://graph.facebook.com/'+uid+'/permissions?access_token='+token,
 	            type: 'DELETE',
 	    });
+
 	
 	    FB.logout(function (response) {
 	        //Do what ever you want here when logged out like reloading the page

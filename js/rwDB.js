@@ -32,7 +32,7 @@ function readData(user, song)
 }
 
 
-function writeData(user, song, r, g, b)
+function writeData(user, song, h0, h1, h2)
 {
     
     var xmlhttp;
@@ -48,7 +48,7 @@ function writeData(user, song, r, g, b)
 
         xmlhttp.open("POST","PHP/writeData.php",true);
         xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xmlhttp.send("User="+user+"&Song="+song+"&H0="+r+"&H1="+g+"&H2="+b);
+        xmlhttp.send("User="+user+"&Song="+song+"&H0="+h0+"&H1="+h1+"&H2="+h2);
         
          xmlhttp.onreadystatechange=function()
       {
@@ -56,10 +56,10 @@ function writeData(user, song, r, g, b)
         {
           $xml = xmlhttp.responseXML;
           if($xml.getElementsByTagName("H0").length !== 0 ){
-            hue0 = $xml.getElementsByTagName( "H0" )[0].textContent;
-            hue1 = $xml.getElementsByTagName( "H1" )[0].textContent;
-            hue2 = $xml.getElementsByTagName( "H2" )[0].textContent;
-            alert("<p>Server color:"+hue0+" "+hue1+" "+hue2+"</p>"+"<p>local color:"+r+" "+g+" "+b+"</p>");
+             // hue0 = $xml.getElementsByTagName( "H0" )[0].textContent;
+        //    hue1 = $xml.getElementsByTagName( "H1" )[0].textContent;
+        //    hue2 = $xml.getElementsByTagName( "H2" )[0].textContent;
+        //    alert("<p>Server color:"+hue0+" "+hue1+" "+hue2+"</p>"+"<p>local color:"+r+" "+g+" "+b+"</p>");
           }
         }
       }

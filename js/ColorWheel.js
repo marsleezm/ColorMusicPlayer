@@ -77,14 +77,14 @@ HSBColorWheel = (function (window, $, undefined) {
         * @type {ColorPickerItem}
         * @private
         */
-        var _hPicker1 = null;
+       // var _hPicker1 = null;
         
                 /**
         * hue picker
         * @type {ColorPickerItem}
         * @private
         */
-        var _hPicker2 = null;
+       // var _hPicker2 = null;
 
         /**
         * shadow display
@@ -122,8 +122,8 @@ HSBColorWheel = (function (window, $, undefined) {
         * @private
         */
         var _hue0 = 360;
-        var _hue1 = 360;
-        var _hue2 = 360;
+        //var _hue1 = 360;
+        //var _hue2 = 360;
 
         /**
         * SATURATION
@@ -244,15 +244,15 @@ HSBColorWheel = (function (window, $, undefined) {
                 _hPicker0.onChange(function () { _handlePickerChange(_hPicker0) });
             }
             
-            if (!_hPicker1) {
-                _hPicker1 = new ColorPickerItem(_$el, 'h', outer, outer - tmpH);
-                _hPicker1.onChange(function () { _handlePickerChange(_hPicker1) });
-            }
+	    //           if (!_hPicker1) {
+            //    _hPicker1 = new ColorPickerItem(_$el, 'h', outer, outer - tmpH);
+           //     _hPicker1.onChange(function () { _handlePickerChange(_hPicker1) });
+           // }
             
-            if (!_hPicker2) {
-                _hPicker2 = new ColorPickerItem(_$el, 'h', outer, outer - tmpH);
-                _hPicker2.onChange(function () { _handlePickerChange(_hPicker2) });
-            }
+          //  if (!_hPicker2) {
+          //      _hPicker2 = new ColorPickerItem(_$el, 'h', outer, outer - tmpH);
+          //      _hPicker2.onChange(function () { _handlePickerChange(_hPicker2) });
+          //  }
 
             if (!_shadowDisplay) {
                 _shadowDisplay = new ShadowDisplay(_$el, outer + _dropShadowSize);
@@ -350,23 +350,23 @@ HSBColorWheel = (function (window, $, undefined) {
             }
             
             
-            if (_hPicker1) {
-                _hPicker1.finalize();
-                _hPicker1 = null;
-            }
+           // if (_hPicker1) {
+           //     _hPicker1.finalize();
+           //     _hPicker1 = null;
+           //}
             
-            
-            if (_hPicker2) {
-                _hPicker2.finalize();
-                _hPicker2 = null;
-            }
+           // 
+           // if (_hPicker2) {
+           //     _hPicker2.finalize();
+           //     _hPicker2 = null;
+           // }
 
-            //if (_sPicker) {
-            //    _sPicker.finalize();
-            //    _sPicker = null;
-            //}
+           // //if (_sPicker) {
+           // //    _sPicker.finalize();
+           // //    _sPicker = null;
+           // //}
 
-            //if (_bPicker) {
+           // //if (_bPicker) {
             //    _bPicker.finalize();
             //    _bPicker = null;
             //}
@@ -431,13 +431,14 @@ HSBColorWheel = (function (window, $, undefined) {
         }
         
         function getAllHue() {
-            return { h0: _hue0,  h1: _hue1, h2: _hue2 };
-        }
+           // return { h0: _hue0,  h1: _hue1, h2: _hue2 };
+           return {h0: _hue0, h1: 0 , h2: 0};
+	}
         
         function setAllHue(hue0, hue1, hue2){
             _hue0 = hue0;
-            _hue1 = hue1;
-            _hue2 = hue2;
+            //_hue1 = hue1;
+            //_hue2 = hue2;
             updateControlsFromValues();
         }
 
@@ -446,8 +447,8 @@ HSBColorWheel = (function (window, $, undefined) {
         */
         function setHSB(hsb0, hsb1, hsb2) {
             _hue0 = hsb0.h;
-            _hue1 = hsb1.h;
-            _hue2 = hsb2.h;
+            //_hue1 = hsb1.h;
+            //_hue2 = hsb2.h;
             _saturation = hsb0.s;
             _brightness = hsb0.b;
             updateControlsFromValues();
@@ -488,9 +489,10 @@ HSBColorWheel = (function (window, $, undefined) {
         function updateControlsFromValues() {
             // update HUE
             _hPicker0.setValue(_hue0);
-            _hPicker1.setValue(_hue1);
-            _hPicker2.setValue(_hue2);
-            //_sPicker.setValue(_saturation);
+            //_hPicker1.setValue(_hue1);
+            //_hPicker2.setValue(_hue2);
+            
+	    //_sPicker.setValue(_saturation);
             //_bPicker.setValue(_brightness);
             updateControlsColors(true, true);
         }
@@ -525,10 +527,10 @@ HSBColorWheel = (function (window, $, undefined) {
         function updateValuesFromControls() {
             if(_activePicker == _hPicker0)
                 _hue0 = _hPicker0.getValue();
-            else if(_activePicker == _hPicker1)
-                _hue1 = _hPicker1.getValue();
-            else if(_activePicker == _hPicker2)
-                _hue2 = _hPicker2.getValue();
+            //else if(_activePicker == _hPicker1)
+            //    _hue1 = _hPicker1.getValue();
+            // else if(_activePicker == _hPicker2)
+            //    _hue2 = _hPicker2.getValue();
             //_saturation = _sPicker.getValue();
             //_brightness = _bPicker.getValue();
         }
@@ -581,18 +583,18 @@ HSBColorWheel = (function (window, $, undefined) {
 
 
         function _getPicker(pageX, pageY) {
-            //var offset = _$el.offset();
-            //var mouseX = pageX - offset.left;
-            //var mouseY = pageY - offset.top;
-            //var radius = Math.sqrt(Math.pow(mouseX, 2) + Math.pow(mouseY, 2));
+            var offset = _$el.offset();
+            var mouseX = pageX - offset.left;
+            var mouseY = pageY - offset.top;
+            var radius = Math.sqrt(Math.pow(mouseX, 2) + Math.pow(mouseY, 2));
 
-            //if (_hPicker0.isOver(radius)) return _hPicker0;
+            if (_hPicker0.isOver(radius)) return _hPicker0;
             //else if (_hPicker1.isOver(radius)) return _hPicker1;
             //else if (_hPicker2.isOver(radius)) return _hPicker2;
             
-            if (_hPicker0.isOver(pageX, pageY)) return _hPicker0;
-            else if (_hPicker1.isOver(pageX, pageY)) return _hPicker1;
-            else if (_hPicker2.isOver(pageX, pageY)) return _hPicker2;
+            //if (_hPicker0.isOver(pageX, pageY)) return _hPicker0;
+            //else if (_hPicker1.isOver(pageX, pageY)) return _hPicker1;
+            //else if (_hPicker2.isOver(pageX, pageY)) return _hPicker2;
             
             //else if (_sPicker.isOver(radius)) return _sPicker;
             //else if (_bPicker.isOver(radius)) return _bPicker;
@@ -939,19 +941,19 @@ HSBColorWheel = (function (window, $, undefined) {
         }
 
 
-        //function isOver(radius) {
-        //    return (radius >= _innerRadius && radius <= _outerRadius);
-        //}
-        
-        function isOver(x, y ) {
-            //return (radius >= _innerRadius && radius <= _outerRadius);
-            var offset = _$arrow.offset();
-            
-            if ( Math.pow(x-offset.left, 2) + Math.pow(y-offset.top, 2) <= 1800)
-                return true;
-            else
-                return false;
+        function isOver(radius) {
+            return (radius >= _innerRadius && radius <= _outerRadius);
         }
+        
+        //function isOver(x, y ) {
+            //return (radius >= _innerRadius && radius <= _outerRadius);
+        //    var offset = _$arrow.offset();
+            
+        //    if ( Math.pow(x-offset.left, 2) + Math.pow(y-offset.top, 2) <= 1800)
+        //        return true;
+        //    else
+        //        return false;
+       // }
         
 
         function mouseDown(event) {
